@@ -58,13 +58,13 @@ use Cake\Utility\Security;
  * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
  * for more information for recommended practices.
 */
-// if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
-//     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
-//     $dotenv->parse()
-//         ->putenv()
-//         ->toEnv()
-//         ->toServer();
-// }
+ if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
+     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+     $dotenv->parse()
+         ->putenv()
+         ->toEnv()
+         ->toServer();
+ }
 
 /*
  * Read configuration file and inject configuration into various
@@ -162,6 +162,12 @@ TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
+Log::setConfig('mailer_logs', [
+    'className' => 'File',
+    'path' => LOGS,
+    'levels' => ['notice', 'info', 'debug', 'error'],
+    'file' => 'mailer_logs',
+]);
 
 /*
  * Setup detectors for mobile and tablet.

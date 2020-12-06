@@ -48,8 +48,14 @@ class ContactFormController extends Controller
     {
         try {
             $form = ContactFormFactory::createForm($this->request->getData());
-            $isFormValid = $form->validate($this->request->getData());
-            echo 228;
+            $formData = $this->request->getData();
+            $isFormValid = $form->validate($formData);
+            if ($isFormValid) {
+                $form->execute($formData);
+                return new Response();
+            } else {
+                throw new NotFoundException();
+            }
         } catch (MissingTemplateException $exception) {
             if (Configure::read('debug')) {
                 throw $exception;
