@@ -1,0 +1,40 @@
+body, h1, h2, h3 {
+    font-family: sans-serif;
+    color: #e6f0fa;
+    font-weight: 400;
+}
+
+body {
+    margin: auto;
+    padding: 10px;
+    min-height: 100%;
+    min-width: 320px;
+    max-width: 700px;
+    overflow-x: hidden;
+    font-family: sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    background-color: #161616;
+    overscroll-behavior-y: none;
+}
+
+label {
+    display: inline-block;
+}
+
+.display-none {
+    display:none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.display-inline {
+    display: inline-block;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0;
+}
