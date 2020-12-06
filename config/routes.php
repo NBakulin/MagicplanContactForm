@@ -73,6 +73,9 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->fallbacks();
 });
 
+$routes->get('/contact_form', ['controller' => 'ContactForm', 'action' => 'getForm', 'index'], 'GetForm');
+$routes->post('/contact_form', ['controller' => 'ContactForm', 'action' => 'postForm', 'index'], 'PostForm');
+
 /*
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.
@@ -80,10 +83,10 @@ $routes->scope('/', function (RouteBuilder $builder) {
  * ```
  * $routes->scope('/api', function (RouteBuilder $builder) {
  *     // No $builder->applyMiddleware() here.
- *     
+ *
  *     // Parse specified extensions from URLs
  *     // $builder->setExtensions(['json', 'xml']);
- *     
+ *
  *     // Connect API actions here.
  * });
  * ```
