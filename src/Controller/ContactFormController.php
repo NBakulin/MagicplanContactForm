@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Form\ContactForm\ContactFormFactory;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
@@ -17,7 +16,6 @@ class ContactFormController extends Controller
 
     public function getForm(string ...$path): ?Response
     {
-//        $this->getEventManager()->off($this->Csrf);
         if (!$path) {
             return $this->redirect('/contact_form');
         }
@@ -51,15 +49,15 @@ class ContactFormController extends Controller
             $formData = $this->request->getData();
             $isFormValid = $form->validate($formData);
             if ($isFormValid) {
-                $form->execute($formData);
-                return new Response();
+                //ToDo successful and unseccessful executes handle
+                if ($form->execute($formData)) {
+                    return new Response();
+                }
             } else {
-                throw new NotFoundException();
+                return $this->render(implode('/', $path));
             }
         } catch (MissingTemplateException $exception) {
-            if (Configure::read('debug')) {
-                throw $exception;
-            }
+            // ToDo think on catch
             throw new NotFoundException();
         }
     }

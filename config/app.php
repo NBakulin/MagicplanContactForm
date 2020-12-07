@@ -228,7 +228,6 @@ return [
              * The keys host, port, timeout, username, password, client and tls
              * are used in SMTP transports
              */
-            'host' => 'ssl://smtp.gmail.com',
             'port' => 465,
             'timeout' => 30,
             /*

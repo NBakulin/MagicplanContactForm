@@ -6,7 +6,6 @@ namespace App\Form\ContactForm;
 use App\Enumeration\Form\ContactFormEnum;
 use Cake\Form\Form;
 
-//ToDo check if factory does this thing
 final class ContactFormFactory
 {
     public static function createForm(array $formData): ?Form

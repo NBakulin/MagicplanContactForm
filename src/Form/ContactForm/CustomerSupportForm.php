@@ -4,24 +4,35 @@ declare(strict_types=1);
 namespace App\Form\ContactForm;
 
 use App\Enumeration\Form\ContactFormEnum;
+use App\Helper\LogHelper;
 use Cake\Event\EventManager;
 use Cake\Form\Form;
 use Cake\Form\Schema;
-use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Cake\Validation\Validator;
 
-final class CustomerSupportForm extends Form
+class CustomerSupportForm extends Form
 {
-    private  $receiver;
+    private ?string $receiver;
 
-    private  $sender;
+    private ?string $sender;
+
+    private LogHelper $logger;
 
     public function __construct(?EventManager $eventManager = null)
     {
         parent::__construct($eventManager);
+
         $this->receiver = env('MAIL_ADDRESS_TO', null);
+
+        if (!$this->receiver) {
+            throw new \Exception('Receiver is not defined in config/.env');
+        }
         $this->sender = env('MAIL_ADDRESS_FROM', null);
+        if (!$this->sender) {
+            throw new \Exception('Sender is not defined in config/.env');
+        }
+        $this->logger = new LogHelper('contact_form_logs');
     }
 
     protected function _buildSchema(Schema $schema): Schema
@@ -40,7 +51,6 @@ final class CustomerSupportForm extends Form
         return $schema;
     }
 
-    //ToDo add invalid fields message
     public function validationDefault(Validator $validator): Validator
     {
         $validator->equals(ContactFormEnum::QUESTION_CUSTOMER_SUPPORT, ContactFormEnum::CUSTOMER_SUPPORT);
@@ -56,24 +66,19 @@ final class CustomerSupportForm extends Form
     protected function _execute(array $data): bool
     {
         try {
-            if (!$this->sender || !$this->receiver) {
-                throw new \Exception('Sender or/and receiver is not defined in config/.env');
-            }
             $mailer = new Mailer('default');
             $mailer->setFrom([$this->sender => 'Contact Form'])
                 ->setTo($this->receiver)
                 ->setSubject('Contact Form Email')
                 ->deliver($data[ContactFormEnum::MESSAGE]);
         } catch (\Exception $error) {
-            Log::write(
+            $this->logger->log(
                 'error',
-                'Could not send an email with data: ' . json_encode($data) . ' and message: ' . $error->getMessage(),
-                ['scope' => 'mailer_logs']
+                'Could not send an email with data: ' . json_encode($data) . ' and message: ' . $error->getMessage()
             );
 
             return false;
         }
-        Log::write('info', 'Mail was sent', ['scope' => 'mailer_logs']);
 
         return true;
     }

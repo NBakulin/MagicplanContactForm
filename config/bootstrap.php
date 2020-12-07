@@ -162,11 +162,11 @@ TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
-Log::setConfig('mailer_logs', [
+Log::setConfig('contact_form_logs', [
     'className' => 'File',
     'path' => LOGS,
     'levels' => ['notice', 'info', 'debug', 'error'],
-    'file' => 'mailer_logs',
+    'file' => 'contact_form_logs',
 ]);
 
 /*

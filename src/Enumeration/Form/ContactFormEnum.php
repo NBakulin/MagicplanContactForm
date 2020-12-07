@@ -25,4 +25,6 @@ class ContactFormEnum
    public const INDUSTRY = 'industry';
 
    public const REGION = 'region';
+
+   public const PHONE = 'phone';
 }
