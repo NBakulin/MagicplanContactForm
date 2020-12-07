@@ -73,8 +73,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->fallbacks();
 });
 
-$routes->get('/contact_form', ['controller' => 'ContactForm', 'action' => 'getForm', 'index'], 'GetForm');
-$routes->post('/contact_form', ['controller' => 'ContactForm', 'action' => 'postForm', 'index'], 'PostForm');
+$routes->get('/contact_form', ['controller' => 'ContactForm', 'action' => 'getForm', 'default'], 'GetForm');
+$routes->post('/contact_form', ['controller' => 'ContactForm', 'action' => 'postForm', 'default'], 'PostForm');
 
 /*
  * If you need a different set of middleware or none at all,
