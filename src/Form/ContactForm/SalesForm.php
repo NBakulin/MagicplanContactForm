@@ -6,12 +6,11 @@ namespace App\Form\ContactForm;
 use App\Enumeration\Form\ContactFormEnum;
 use App\Helper\LogHelper;
 use Cake\Event\EventManager;
-use Cake\Form\Form;
 use Cake\Form\Schema;
 use Cake\Validation\Validator;
 use Cake\Http\Client;
 
-final class SalesForm extends Form
+final class SalesForm extends AbstractContactForm
 {
     private ?string $requestUrl;
 
@@ -52,12 +51,8 @@ final class SalesForm extends Form
 
     protected function _buildSchema(Schema $schema): Schema
     {
+        parent::_buildSchema($schema);
         $keys = [
-            ContactFormEnum::QUESTION_CUSTOMER_SUPPORT => 'string',
-            ContactFormEnum::FIRST_NAME => 'string',
-            ContactFormEnum::LAST_NAME => 'string',
-            ContactFormEnum::EMAIL => 'string',
-            ContactFormEnum::MESSAGE => 'string',
             ContactFormEnum::COMPANY_NAME => 'string',
             ContactFormEnum::COMPANY_SIZE => 'string',
             ContactFormEnum::INDUSTRY => 'string',
@@ -73,11 +68,8 @@ final class SalesForm extends Form
 
     public function validationDefault(Validator $validator): Validator
     {
-        $validator->equals(ContactFormEnum::QUESTION_CUSTOMER_SUPPORT, ContactFormEnum::SALES);
-        $validator->notEmptyString(ContactFormEnum::FIRST_NAME, 'Please provide your first name');
-        $validator->notEmptyString(ContactFormEnum::LAST_NAME, 'Please provide your last name');
-        $validator->email(ContactFormEnum::EMAIL, false, 'Please provide your email');
-        $validator->notEmptyString(ContactFormEnum::MESSAGE, 'Please write a message');
+        parent::validationDefault($validator);
+        $validator->equals(ContactFormEnum::QUESTION_TYPE, ContactFormEnum::SALES);
         $validator->notEmptyString(ContactFormEnum::COMPANY_NAME, 'Please provide a company name');
         $validator->inList(ContactFormEnum::COMPANY_SIZE, self::ALLOWED_COMPANY_SIZE, 'Please provide a company size');
         $validator->inList(ContactFormEnum::INDUSTRY, self::ALLOWED_INDUSTRY, 'Please provide a company industry');

@@ -10,8 +10,8 @@ final class ContactFormFactory
 {
     public static function createForm(array $formData): ?Form
     {
-        if (isset($formData[ContactFormEnum::QUESTION_CUSTOMER_SUPPORT])) {
-            $questionType = $formData[ContactFormEnum::QUESTION_CUSTOMER_SUPPORT];
+        if (isset($formData[ContactFormEnum::QUESTION_TYPE])) {
+            $questionType = $formData[ContactFormEnum::QUESTION_TYPE];
             if ($questionType === ContactFormEnum::SALES) {
                 return new SalesForm();
             }

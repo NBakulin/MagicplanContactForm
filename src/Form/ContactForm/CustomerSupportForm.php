@@ -6,12 +6,10 @@ namespace App\Form\ContactForm;
 use App\Enumeration\Form\ContactFormEnum;
 use App\Helper\LogHelper;
 use Cake\Event\EventManager;
-use Cake\Form\Form;
-use Cake\Form\Schema;
 use Cake\Mailer\Mailer;
 use Cake\Validation\Validator;
 
-class CustomerSupportForm extends Form
+final class CustomerSupportForm extends AbstractContactForm
 {
     private ?string $receiver;
 
@@ -35,30 +33,10 @@ class CustomerSupportForm extends Form
         $this->logger = new LogHelper('contact_form_logs');
     }
 
-    protected function _buildSchema(Schema $schema): Schema
-    {
-        $keys = [
-            ContactFormEnum::QUESTION_CUSTOMER_SUPPORT => 'string',
-            ContactFormEnum::FIRST_NAME => 'string',
-            ContactFormEnum::LAST_NAME => 'string',
-            ContactFormEnum::EMAIL => 'string',
-            ContactFormEnum::MESSAGE => 'string',
-        ];
-
-        foreach ($keys as $field => $type) {
-            $schema->addField($field, ['type' => $type]);
-        }
-        return $schema;
-    }
-
     public function validationDefault(Validator $validator): Validator
     {
-        $validator->equals(ContactFormEnum::QUESTION_CUSTOMER_SUPPORT, ContactFormEnum::CUSTOMER_SUPPORT);
-        $validator->notEmptyString(ContactFormEnum::FIRST_NAME, 'Please provide your first name');
-        $validator->notEmptyString(ContactFormEnum::LAST_NAME, 'Please provide your last name');
-        // can check if email exists in MX-record with second argument but I think it is not necessary here
-        $validator->email(ContactFormEnum::EMAIL, false, 'Please provide your email');
-        $validator->notEmptyString(ContactFormEnum::MESSAGE, 'Please write a message');
+        parent::validationDefault($validator);
+        $validator->equals(ContactFormEnum::QUESTION_TYPE, ContactFormEnum::CUSTOMER_SUPPORT);
 
         return $validator;
     }

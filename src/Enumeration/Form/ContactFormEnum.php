@@ -4,7 +4,7 @@ namespace App\Enumeration\Form;
 
 class ContactFormEnum
 {
-    public const QUESTION_CUSTOMER_SUPPORT = 'question_customer_support';
+    public const QUESTION_TYPE = 'question_type';
 
     public const SALES = 'sales';
 

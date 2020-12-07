@@ -43,9 +43,9 @@ $description = 'Contact Form';
 
                     <p class="margin-bottom-0">My question is related to:</p>
                     <div id="question_type" class="display-inline">
-                        <input type="radio" id="question_customer_support" name="question_customer_support" value="customer_support" onchange="toggleForm(event)" checked>
-                        <label for="question_customer_support">Customer Support</label>
-                        <input type="radio" id="question_sales" name="question_customer_support" value="sales" onchange="toggleForm(event)">
+                        <input type="radio" id="question_type" name="question_type" value="customer_support" onchange="toggleForm(event)" checked>
+                        <label for="question_type">Customer Support</label>
+                        <input type="radio" id="question_sales" name="question_type" value="sales" onchange="toggleForm(event)">
                         <label for="question_sales">Sales</label>
                     </div>
 
