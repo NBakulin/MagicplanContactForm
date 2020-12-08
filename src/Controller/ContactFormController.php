@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
+use Cake\Log\Log;
 use Cake\View\Exception\MissingTemplateException;
 
 class ContactFormController extends Controller
@@ -46,19 +47,32 @@ class ContactFormController extends Controller
     {
         try {
             $form = ContactFormFactory::createForm($this->request->getData());
+            if (!$form) {
+                throw new \Exception();
+            }
             $formData = $this->request->getData();
             $isFormValid = $form->validate($formData);
             if ($isFormValid) {
-                //ToDo successful and unseccessful executes handle
                 if ($form->execute($formData)) {
-                    return new Response();
+                    return $this->render('success');
                 }
             } else {
-                return $this->render(implode('/', $path));
+                return $this->createResponse(422, json_encode($form->getErrors()));
             }
-        } catch (MissingTemplateException $exception) {
-            // ToDo think on catch
-            throw new NotFoundException();
+        } catch (\Exception $exception) {
+            $encodedMessage = json_encode($exception);
+            Log::write('error', "Could not handle an error with message: {$encodedMessage}" );
         }
+        return $this->createResponse(500, json_encode(['message' => 'Something went wrong']));
+    }
+
+    private function createResponse(int $status, string $body): Response
+    {
+        return new Response(
+            [
+                'status' => $status,
+                'body' => $body,
+            ]
+        );
     }
 }

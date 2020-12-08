@@ -74,6 +74,7 @@ final class SalesForm extends AbstractContactForm
         $validator->inList(ContactFormEnum::COMPANY_SIZE, self::ALLOWED_COMPANY_SIZE, 'Please provide a company size');
         $validator->inList(ContactFormEnum::INDUSTRY, self::ALLOWED_INDUSTRY, 'Please provide a company industry');
         $validator->inList(ContactFormEnum::REGION, self::ALLOWED_REGION,'Please provide a region');
+        // ToDo check phone digits length?
         $validator->add(ContactFormEnum::PHONE, 'custom', [
             'rule' => function ($value) {
                 return $value === '' || (bool)preg_match('#^[+]?[\d]+$#', $value);
@@ -89,7 +90,7 @@ final class SalesForm extends AbstractContactForm
     {
         try {
             $client = new Client();
-            $response = $client->post($this->requestUrl, json_encode($data));
+            $response = $client->post($this->requestUrl, json_encode($data), ['type' => 'text/html; charset=utf-8']);
             if (
                 $response->getStatusCode() === 200
                 || $response->getStatusCode() === 204
@@ -100,10 +101,10 @@ final class SalesForm extends AbstractContactForm
                 'notice',
                 "POST \"{$this->requestUrl}\" responded with {$response->getStatusCode()} response code. Data: " . json_encode($data) . ' Response body: ' . $response->getStringBody()
             );
-        } catch (\Exception $error) {
+        } catch (\Exception $exception) {
             $this->logger->log(
                 'error',
-                "POST \"{$this->requestUrl}\" with request with data: " . json_encode($data) . '. Got message: ' . $error->getMessage()
+                "POST \"{$this->requestUrl}\" with request with data: " . json_encode($data) . '. Got message: ' . $exception->getMessage()
             );
         }
 
