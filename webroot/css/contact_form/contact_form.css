@@ -1,15 +1,9 @@
-body, h1, h2, h3 {
-    font-family: sans-serif;
-    color: #e6f0fa;
-    font-weight: 400;
-}
-
 body {
     margin: auto;
     padding: 10px;
     min-height: 100%;
     min-width: 320px;
-    max-width: 700px;
+    max-width: 600px;
     overflow-x: hidden;
     font-family: sans-serif;
     font-weight: 400;
@@ -19,22 +13,11 @@ body {
     overscroll-behavior-y: none;
 }
 
-label {
-    display: inline-block;
+.padding-top {
+    padding-top: 150px;
 }
 
 .display-none {
-    display:none;
+    display: none;
 }
 
-.text-center {
-    text-align: center;
-}
-
-.display-inline {
-    display: inline-block;
-}
-
-.margin-bottom-0 {
-    margin-bottom: 0;
-}
