@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Form\ContactForm;
 
-use App\Enumeration\Form\ContactFormEnum;
+use App\Enumeration\ContactForm\ContactFormEnum;
 use App\Helper\LogHelper;
 use Cake\Event\EventManager;
 use Cake\Mailer\Mailer;

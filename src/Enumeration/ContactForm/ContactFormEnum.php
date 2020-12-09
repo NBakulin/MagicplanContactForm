@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Enumeration\Form;
+namespace App\Enumeration\ContactForm;
 
 class ContactFormEnum
 {
@@ -14,17 +14,17 @@ class ContactFormEnum
 
     public const LAST_NAME = 'last_name';
 
-   public const EMAIL = 'email';
+    public const EMAIL = 'email';
 
-   public const MESSAGE = 'message';
+    public const MESSAGE = 'message';
 
     public const COMPANY_NAME = 'company_name';
 
-   public const COMPANY_SIZE = 'company_size';
+    public const COMPANY_SIZE = 'company_size';
 
-   public const INDUSTRY = 'industry';
+    public const INDUSTRY = 'industry';
 
-   public const REGION = 'region';
+    public const REGION = 'region';
 
-   public const PHONE = 'phone';
+    public const PHONE = 'phone';
 }
