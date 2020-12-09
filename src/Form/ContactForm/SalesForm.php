@@ -68,8 +68,8 @@ final class SalesForm extends AbstractContactForm
 
     public function validationDefault(Validator $validator): Validator
     {
-        parent::validationDefault($validator);
         $validator->equals(ContactFormEnum::QUESTION_TYPE, ContactFormEnum::SALES);
+        $validator = parent::validationDefault($validator);
         $validator->notEmptyString(ContactFormEnum::COMPANY_NAME, 'Please provide a company name');
         $validator->inList(ContactFormEnum::COMPANY_SIZE, self::ALLOWED_COMPANY_SIZE, 'Please provide a company size');
         $validator->inList(ContactFormEnum::INDUSTRY, self::ALLOWED_INDUSTRY, 'Please provide a company industry');

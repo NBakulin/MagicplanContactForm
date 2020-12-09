@@ -35,8 +35,8 @@ final class CustomerSupportForm extends AbstractContactForm
 
     public function validationDefault(Validator $validator): Validator
     {
-        parent::validationDefault($validator);
         $validator->equals(ContactFormEnum::QUESTION_TYPE, ContactFormEnum::CUSTOMER_SUPPORT);
+        $validator = parent::validationDefault($validator);
 
         return $validator;
     }
