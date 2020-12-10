@@ -5,7 +5,9 @@ use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
-use Cake\Mailer\Transport\MailTransport;
+
+$emailSender = env('MAIL_ADDRESS_FROM', '');
+$emailPassword = env('MAIL_PASSWORD', '');
 
 return [
     /*
@@ -223,21 +225,8 @@ return [
         'default' => [
             'className' => 'Debug',
             /** Uncomment the line below to send an email */
-//            'className' => MailTransport::class,
-            /*
-             * The keys host, port, timeout, username, password, client and tls
-             * are used in SMTP transports
-             */
-            'port' => 465,
-            'timeout' => 30,
-            /*
-             * It is recommended to set these options through your environment or app_local.php
-             */
-            'username' => 'magicplan621@gmail.com',
-            'password' => 'magicplan621magicplan621',
-            'client' => null,
-            'tls' => null,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+//            'className' => 'Smtp',
+            'url' => "smtp://$emailSender:$emailPassword@smtp.gmail.com:587?tls=true",
         ],
     ],
 
