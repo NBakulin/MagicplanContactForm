@@ -45,10 +45,14 @@ final class CustomerSupportForm extends AbstractContactForm
     {
         try {
             $mailer = new Mailer('default');
+            $mailer->setViewVars(['form' => $data]);
             $mailer->setFrom([$this->sender => 'Contact Form'])
                 ->setTo($this->receiver)
                 ->setSubject('Contact Form Email')
-                ->deliver("Customer {$data[ContactFormEnum::FIRST_NAME]} {$data[ContactFormEnum::LAST_NAME]} with email \"{$data[ContactFormEnum::EMAIL]}\" sent a message: \"{$data[ContactFormEnum::MESSAGE]}\"");
+                ->viewBuilder()
+                    ->setTemplate('contact_form')
+                    ->setLayout('contact_form');
+            $mailer->deliver();
         } catch (\Exception $exception) {
             $this->logger->log(
                 'error',

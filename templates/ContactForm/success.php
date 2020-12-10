@@ -1,15 +1,6 @@
 <?php
 
-use Cake\Core\Configure;
-use Cake\Http\Exception\NotFoundException;
-
 $this->disableAutoLayout();
-
-if (!Configure::read('debug')) :
-    throw new NotFoundException(
-        'Please replace templates/Pages/home.php with your own version or re-enable debug mode.'
-    );
-endif;
 
 $description = 'Contact Form';
 

@@ -14,8 +14,9 @@
  * @var \App\View\AppView $this
  */
 
-$content = explode("\n", $content);
+use App\Enumeration\ContactForm\ContactFormEnum;
 
-foreach ($content as $line) :
-    echo '<p> ' . $line . "</p>\n";
-endforeach;
+echo "Message from {$form[ContactFormEnum::FIRST_NAME]} {$form[ContactFormEnum::LAST_NAME]}\n";
+echo "With email {$form[ContactFormEnum::EMAIL]}\n";
+echo $form[ContactFormEnum::MESSAGE];
+
