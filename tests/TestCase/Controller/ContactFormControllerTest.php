@@ -44,9 +44,8 @@ class ContactFormControllerTest extends TestCase
     }
 
     /**
-     * This test asserts fail because API_URL="https://apiendpoint.app" (set in .env) does not exist.
-     * To test if request making works just change $this->requestUrl in SalesForm __construct() to something valid
-     * For example https://postman-echo.com/post
+     * This test asserts fail because API_ENDPOINT_URL="https://apiendpoint.app/sales" (set in .env) is not accessible.
+     * To test if request making works just change it to something that will accept POST requests like https://postman-echo.com/post
      **/
     public function testPostDomainNotFoundFail()
     {

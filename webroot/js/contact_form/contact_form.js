@@ -28,6 +28,7 @@ function onSubmit(event) {
         } else if(request.status === 500) {
             let unhandledErrorMessage = document.getElementById('unhandled_error')
             unhandledErrorMessage.classList.remove('display-none')
+            window.scrollTo(0, 0);
         } else {
             showErrors(request)
         }

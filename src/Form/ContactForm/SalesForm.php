@@ -20,11 +20,11 @@ final class SalesForm extends AbstractContactForm
     {
         parent::__construct($eventManager);
 
-        $this->requestUrl = env('API_URL', null);
+        $this->requestUrl = env('API_ENDPOINT_URL', null);
         if (!$this->requestUrl) {
             throw new \Exception('API URL to send a contact form data is not defined in config/.env');
         }
-        $this->requestUrl .= '/sales';
+
         $this->logger = new LogHelper('contact_form_logs');
     }
 
@@ -80,7 +80,6 @@ final class SalesForm extends AbstractContactForm
             'message' => 'Please provide a valid phone number'
         ]);
 
-
         return $validator;
     }
 
@@ -102,6 +101,7 @@ final class SalesForm extends AbstractContactForm
                 "POST \"{$this->requestUrl}\" with request with data: " . json_encode($data) . '. Got message: ' . $exception->getMessage()
             );
         }
+
         return false;
     }
 }

@@ -22,10 +22,10 @@ final class CustomerSupportForm extends AbstractContactForm
         parent::__construct($eventManager);
 
         $this->receiver = env('MAIL_ADDRESS_TO', null);
-
         if (!$this->receiver) {
             throw new \Exception('Receiver is not defined in config/.env');
         }
+
         $this->sender = env('MAIL_ADDRESS_FROM', null);
         if (!$this->sender) {
             throw new \Exception('Sender is not defined in config/.env');
@@ -60,6 +60,7 @@ final class CustomerSupportForm extends AbstractContactForm
             );
             return false;
         }
+
         return true;
     }
 }
