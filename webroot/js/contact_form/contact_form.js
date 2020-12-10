@@ -53,10 +53,8 @@ function removeErrorMessages() {
     }
 
     let errorContainers = document.getElementsByClassName('error')
-    for (let i = 0; i < errorContainers.length; i++) {
-        if (errorContainers[i] !== unhandledErrorMessage) {
-            errorContainers[i].classList.remove('error')
-        }
+    while (errorContainers.length > 1) {
+        errorContainers[1].classList.remove('error')
     }
 }
 
@@ -68,7 +66,6 @@ function showErrors(request) {
         input.classList.add('error')
         let errorMessage = document.getElementById('error_' + error_name)
         errorMessage.hidden = false
-        // ToDo think on a better way
         for (let errorKey in errors[error_name]) {
             errorMessage.innerHTML = errors[error_name][errorKey]
             break
