@@ -5,6 +5,10 @@
  * Note: It is not recommended to commit files with credentials such as app_local.php
  * into source code version control.
  */
+
+$emailSender = env('MAIL_ADDRESS_FROM', '');
+$emailPassword = env('MAIL_PASSWORD', '');
+
 return [
     /*
      * Debug Level:
@@ -25,7 +29,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '__SALT__'),
+        'salt' => env('SECURITY_SALT', 'cf8af2ca819698fc1d34cae4e8f3681ca5d4c987d6d7fbdb60e2a0b16cf3245f'),
     ],
 
     /*
@@ -83,12 +87,10 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'host' => 'localhost',
-            'port' => 25,
-            'username' => null,
-            'password' => null,
-            'client' => null,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            'className' => 'Debug',
+            /** Uncomment the line below to send an email */
+//            'className' => 'Smtp',
+            'url' => "smtp://$emailSender:$emailPassword@smtp.gmail.com:587?tls=true",
         ],
     ],
 ];
