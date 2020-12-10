@@ -20,7 +20,7 @@ Also need to have installed:
 Configuration is managed by `/config/.env` file variables. Only two of them are useful for us, they are: `MAIL_ADDRESS_TO` to define a mail address to send emails to and `API_ENDPOINT_URL` to define endpoint url to send post request to.
 
 ## Email sending
-To send an email via customer support go to `app.php` file, comment the line `'className' => 'Debug',` and uncomment `'className' => 'Smtp',`. I have created a new Google account to send emails, so there is no need to change `MAIL_ADDRESS_FROM` or `MAIL_PASSWORD` variables.
+To send an email via customer support go to `config/app.php` (for local PHP) or to file `config/app_local.php` (for Docker PHP), comment the line `'className' => 'Debug',` and uncomment `'className' => 'Smtp',`. I have created a new Google account to send emails, so there is no need to change `MAIL_ADDRESS_FROM` or `MAIL_PASSWORD` variables.
 
 ## Requesting real API
 By default application requests an external API endpoint `https://apiendpoint.app/sales` (which will give 500 error code and an error message on a form since domain does not exist). If you want to make a request to existing API endpoint, you may manually change `API_ENDPOINT_URL` variable to one you want (I suggest `https://postman-echo.com/post`).
