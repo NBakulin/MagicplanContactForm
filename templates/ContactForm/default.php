@@ -58,12 +58,12 @@ $description = 'Contact Form';
                     </div>
 
                     <div class="contact-name-container">
-                        <div id="first_name" class="input text required">
+                        <div id="first_name" class="input text">
                             <label for="input_first_name">First name</label>
                             <input class="mr-8 sm:mr-0" type="text" id="input_first_name" name="first_name" required>
                             <div class="error-message" hidden id="error_first_name"></div>
                         </div>
-                        <div id="last_name" class="input text required">
+                        <div id="last_name" class="input text">
                             <label for="input_last_name">Last name</label>
                             <input class="ml-8 sm:ml-0" type="text" id="input_last_name" name="last_name" required>
                             <div class="error-message" hidden id="error_last_name"></div>

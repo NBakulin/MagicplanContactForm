@@ -21,7 +21,6 @@ final class SalesForm extends AbstractContactForm
         parent::__construct($eventManager);
 
         $this->requestUrl = env('API_URL', null);
-        // ToDo check if it will work
         if (!$this->requestUrl) {
             throw new \Exception('API URL to send a contact form data is not defined in config/.env');
         }
@@ -74,7 +73,6 @@ final class SalesForm extends AbstractContactForm
         $validator->inList(ContactFormEnum::COMPANY_SIZE, self::ALLOWED_COMPANY_SIZE, 'Please provide a company size');
         $validator->inList(ContactFormEnum::INDUSTRY, self::ALLOWED_INDUSTRY, 'Please provide a company industry');
         $validator->inList(ContactFormEnum::REGION, self::ALLOWED_REGION,'Please provide a region');
-        // ToDo check phone digits length?
         $validator->add(ContactFormEnum::PHONE, 'custom', [
             'rule' => function ($value) {
                 return $value === '' || (bool)preg_match('#^[+]?[\d]+$#', $value);
@@ -91,10 +89,7 @@ final class SalesForm extends AbstractContactForm
         try {
             $client = new Client();
             $response = $client->post($this->requestUrl, json_encode($data), ['type' => 'text/html; charset=utf-8']);
-            if (
-                $response->getStatusCode() === 200
-                || $response->getStatusCode() === 204
-            ) {
+            if ($response->getStatusCode() === 200 || $response->getStatusCode() === 204) {
                 return true;
             }
             $this->logger->log(
@@ -107,7 +102,6 @@ final class SalesForm extends AbstractContactForm
                 "POST \"{$this->requestUrl}\" with request with data: " . json_encode($data) . '. Got message: ' . $exception->getMessage()
             );
         }
-
         return false;
     }
 }

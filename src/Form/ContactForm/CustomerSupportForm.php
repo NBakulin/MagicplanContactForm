@@ -48,16 +48,14 @@ final class CustomerSupportForm extends AbstractContactForm
             $mailer->setFrom([$this->sender => 'Contact Form'])
                 ->setTo($this->receiver)
                 ->setSubject('Contact Form Email')
-                ->deliver($data[ContactFormEnum::MESSAGE]);
+                ->deliver("Customer {$data[ContactFormEnum::FIRST_NAME]} {$data[ContactFormEnum::LAST_NAME]} with email \"{$data[ContactFormEnum::EMAIL]}\" sent a message: \"{$data[ContactFormEnum::MESSAGE]}\"");
         } catch (\Exception $exception) {
             $this->logger->log(
                 'error',
                 'Could not send an email with data: ' . json_encode($data) . ' and message: ' . $exception->getMessage()
             );
-
             return false;
         }
-
         return true;
     }
 }
