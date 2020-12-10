@@ -1,53 +1,31 @@
-# CakePHP Application Skeleton
+# Coding Task - Contact form
 
-[![Build Status](https://img.shields.io/github/workflow/status/cakephp/app/CakePHP%20App%20CI/master?style=flat-square)](https://github.com/cakephp/app/actions)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+This is a coding task made by Nikita Bakulin (nk.bakulin@gmail.com) for Magicplan.
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
-
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+## Requirements
+* `PHP 7.4.13` - not recommended as additional extensions installation may be needed.
+There are two possible variants to run this app locally: using Docker or locally installed PHP.
+* Or `Docker` for Mac or Windows.
+* Composer installed locally
 
 ## Installation
-
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
-
-If Composer is installed globally, run
-
-```bash
-composer create-project --prefer-dist cakephp/app
-```
-
-In case you want to use a custom app dir name (e.g. `/myapp/`):
-
-```bash
-composer create-project --prefer-dist cakephp/app myapp
-```
-
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
-
-```bash
-bin/cake server -p 8765
-```
-
-Then visit `http://localhost:8765` to see the welcome page.
-
-## Update
-
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
+1. Clone via `git clone https://github.com/NBakulin/MagicplanContactForm.git`
+2. Run `composer install` in a root of repo
+3. Run `bin/cake server` (if use local PHP) or `docker-compose up` (if use Docker)
+4. Form can be accessed on http://localhost:8765/contact_form or http://localhost/contact_form respectively
 
 ## Configuration
+Configuration is managed by `/config/.env` file variables. Only two of them are interested, they are: `MAIL_ADDRESS_TO` to define a mail address to send emails to and `API_URL` (I do not recommend to change it, have a look at section `Requesting real API` in this file for explanation)
 
-Read and edit the environment specific `config/app_local.php` and setup the 
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+## Email sending
+To send an email via customer support go to `app.php` file fore local php installation or to `app_local.php` if you are using docker. Comment the line `'className' => 'Debug',` and uncomment `'className' => 'Smtp',`. I have created a new Google account to send emails, so there is no need to change `MAIL_ADDRESS_FROM` or `MAIL_PASSWORD` variables.
 
-## Layout
+## Requesting real API
+By default application requests external API with host `https://apiendpoint.app` and path `/sales` (which will give 500 error code and an error message on a form). If you want to make a request to existing API, you may manually change `$this->requestUrl` to one you want (I suggest `https://postman-echo.com/post`). I did not put whole `https://apiendpoint.app/sales` url in `.env` to make `API_URL` variable reusable (e.g. when there will be need to request another endpoint of this API).
 
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+## Logging
+Logs are stored in `/logs` directory
+The pplication writes logs on unsuccessful email sending, request to external API or unhandled error. These logs are stored in a `contact_form_logs.log` file.
+
+## Autotests
+There are phpunit tests for ContactFormController and validators in a `/tests` folder.
